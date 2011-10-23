@@ -1,17 +1,17 @@
 package stemmer
 
-func consonant(body []byte, offset int) bool {
+func Consonant(body []byte, offset int) bool {
 	switch body[offset] {
 	case 'A', 'E', 'I', 'O', 'U':
 		return false
 	case 'Y':
-		return offset > 0 && !consonant(body, offset-1)
+		return offset > 0 && !Consonant(body, offset-1)
 	}
 	return true
 }
 
-func vowel(body []byte, offset int) bool {
-	return !consonant(body, offset)
+func Vowel(body []byte, offset int) bool {
+	return !Consonant(body, offset)
 }
 
 const (
@@ -19,19 +19,19 @@ const (
 	consonant_state
 )
 
-func meansure(body []byte) int {
+func Meansure(body []byte) int {
 	meansure := 0
 	var state int
-	if vowel(body, 0) {
+	if Vowel(body, 0) {
 		state = vowel_state
 	} else {
 		state = consonant_state
 	}
 	for i := 0; i < len(body); i++ {
-		if vowel(body, i) && state == consonant_state {
+		if Vowel(body, i) && state == consonant_state {
 			state = vowel_state
 			meansure++
-		} else if consonant(body, i) && state == vowel_state {
+		} else if Consonant(body, i) && state == vowel_state {
 			state = consonant_state
 			meansure++
 		}
