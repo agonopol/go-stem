@@ -162,7 +162,7 @@ func three(body []byte) []byte {
 		return append(body[:len(body)-5], []byte("ic")...)
 	} else if bytes.HasSuffix(body, []byte("ative")) && Meansure(body[:len(body)-5]) > 0 {
 		return body[:len(body)-5]
-	}else if bytes.HasSuffix(body, []byte("alize")) && Meansure(body[:len(body)-5]) > 0 {
+	} else if bytes.HasSuffix(body, []byte("alize")) && Meansure(body[:len(body)-5]) > 0 {
 		return append(body[:len(body)-5], []byte("al")...)
 	} else if bytes.HasSuffix(body, []byte("iciti")) && Meansure(body[:len(body)-5]) > 0 {
 		return append(body[:len(body)-5], []byte("ic")...)
@@ -176,6 +176,68 @@ func three(body []byte) []byte {
 	return body
 }
 
-func Stem(word []byte) []byte {
-	return []byte("")
+func four(body []byte) []byte {
+	if bytes.HasSuffix(body, []byte("al")) && Meansure(body[:len(body)-2]) > 1 {
+		return body[:len(body)-2]
+	} else if bytes.HasSuffix(body, []byte("ance")) && Meansure(body[:len(body)-4]) > 1 {
+		return body[:len(body)-4]
+	} else if bytes.HasSuffix(body, []byte("ence")) && Meansure(body[:len(body)-4]) > 1 {
+		return body[:len(body)-4]
+	} else if bytes.HasSuffix(body, []byte("er")) && Meansure(body[:len(body)-2]) > 1 {
+		return body[:len(body)-2]
+	} else if bytes.HasSuffix(body, []byte("ic")) && Meansure(body[:len(body)-2]) > 1 {
+		return body[:len(body)-2]
+	} else if bytes.HasSuffix(body, []byte("able")) && Meansure(body[:len(body)-4]) > 1 {
+		return body[:len(body)-4]
+	} else if bytes.HasSuffix(body, []byte("ible")) && Meansure(body[:len(body)-4]) > 1 {
+		return body[:len(body)-4]
+	} else if bytes.HasSuffix(body, []byte("ant")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	} else if bytes.HasSuffix(body, []byte("ement")) && Meansure(body[:len(body)-5]) > 1 {
+		return body[:len(body)-5]
+	} else if bytes.HasSuffix(body, []byte("ment")) && Meansure(body[:len(body)-4]) > 1 {
+		return body[:len(body)-4]
+	} else if bytes.HasSuffix(body, []byte("ent")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	} else if bytes.HasSuffix(body, []byte("ion")) && Meansure(body[:len(body)-3]) > 1 {
+		if len(body) > 4 && (body[len(body)-4] == 's' || body[len(body)-4] == 't') {
+			return body[:len(body)-3]
+		}
+	} else if bytes.HasSuffix(body, []byte("ou")) && Meansure(body[:len(body)-2]) > 1 {
+		return body[:len(body)-2]
+	} else if bytes.HasSuffix(body, []byte("ism")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	} else if bytes.HasSuffix(body, []byte("ate")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	} else if bytes.HasSuffix(body, []byte("iti")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	} else if bytes.HasSuffix(body, []byte("ous")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	} else if bytes.HasSuffix(body, []byte("ive")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	} else if bytes.HasSuffix(body, []byte("ize")) && Meansure(body[:len(body)-3]) > 1 {
+		return body[:len(body)-3]
+	}
+	return body
+}
+
+func five_a(body []byte) []byte {
+	if bytes.HasSuffix(body, []byte("e")) && Meansure(body[:len(body)-1]) > 1 {
+		return body[:len(body)-1]
+	} else if bytes.HasSuffix(body, []byte("e"))  && Meansure(body[:len(body)-1]) == 1 && !star_o(body[:len(body)-1]) {
+		return body[:len(body)-1]
+	}
+	return body
+}
+
+func five_b(body []byte) []byte {
+	size := len(body)
+	if Meansure(body) > 1 && Consonant(body, size-1) && Consonant(body, size-2) && body[size-1] == body[size-2] && body[size-1] == 'l' {
+		return body[:len(body)-1]
+	}
+	return body
+}
+
+func Stem(body []byte) []byte {
+	return five_b(five_a(four(three(two(one_c(one_b(one_a(body))))))))
 }
