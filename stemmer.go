@@ -5,10 +5,7 @@ func consonant(body []byte, offset int) bool {
 	case 'A', 'E', 'I', 'O', 'U':
 		return false
 	case 'Y':
-		if len(body)+1 < offset {
-			return !consonant(body, offset+1)
-		}
-		return false
+		return offset > 0 && !consonant(body, offset-1)
 	}
 	return true
 }
