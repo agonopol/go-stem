@@ -239,5 +239,5 @@ func five_b(body []byte) []byte {
 }
 
 func Stem(body []byte) []byte {
-	return five_b(five_a(four(three(two(one_c(one_b(one_a(body))))))))
+	return five_b(five_a(four(three(two(one_c(one_b(one_a(bytes.TrimSpace(bytes.ToLower(body))))))))))
 }
