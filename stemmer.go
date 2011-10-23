@@ -1,5 +1,11 @@
 package stemmer
 
+import "fmt"
+
+func ingore() {
+	fmt.Sprintf("")
+}
+
 func Consonant(body []byte, offset int) bool {
 	switch body[offset] {
 	case 'A', 'E', 'I', 'O', 'U':
@@ -30,7 +36,6 @@ func Meansure(body []byte) int {
 	for i := 0; i < len(body); i++ {
 		if Vowel(body, i) && state == consonant_state {
 			state = vowel_state
-			meansure++
 		} else if Consonant(body, i) && state == vowel_state {
 			state = consonant_state
 			meansure++
