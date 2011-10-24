@@ -12,6 +12,9 @@ func Consonant(body []byte, offset int) bool {
 	case 'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u':
 		return false
 	case 'Y', 'y':
+		if offset == 0 {
+			return true
+		}
 		return offset > 0 && !Consonant(body, offset-1)
 	}
 	return true
@@ -75,6 +78,7 @@ func star_o(body []byte) bool {
 	return false
 }
 func one_b_a(body []byte) []byte {
+	
 	size := len(body)
 	if bytes.HasSuffix(body, []byte("at")) {
 		return append(body, 'e')

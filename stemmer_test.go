@@ -13,14 +13,14 @@ func compare(t *testing.T, expected, actual interface{}, msg ...string) {
 }
 // 
 // func TestWord(t *testing.T) {
-// 	fmt.Printf("%v\n", string(one_a([]byte("as"))))
-// 	fmt.Printf("%v\n", string(one_b(one_a([]byte("as")))))
-// 	fmt.Printf("%v\n", string(one_c(one_b(one_a([]byte("as"))))))
-// 	fmt.Printf("%v\n", string(two(one_c(one_b(one_a([]byte("apology")))))))
-// 	fmt.Printf("%v\n", string(three(two(one_c(one_b(one_a([]byte("apology"))))))))
-// 	fmt.Printf("%v\n", string(four(three(two(one_c(one_b(one_a([]byte("apology")))))))))
-// 	fmt.Printf("%v\n", string(five_a(four(three(two(one_c(one_b(one_a([]byte("apology"))))))))))
-// 	fmt.Printf("%v\n", string(five_b(five_a(four(three(two(one_c(one_b(one_a([]byte("apology")))))))))))
+// 	fmt.Printf("%v\n", string(one_a([]byte("ycleped"))))
+// 	fmt.Printf("%v\n", string(one_b(one_a([]byte("ycleped")))))
+// 	fmt.Printf("%v\n", string(one_c(one_b(one_a([]byte("ycleped"))))))
+// 	fmt.Printf("%v\n", string(two(one_c(one_b(one_a([]byte("ycleped")))))))
+// 	fmt.Printf("%v\n", string(three(two(one_c(one_b(one_a([]byte("ycleped"))))))))
+// 	fmt.Printf("%v\n", string(four(three(two(one_c(one_b(one_a([]byte("ycleped")))))))))
+// 	fmt.Printf("%v\n", string(five_a(four(three(two(one_c(one_b(one_a([]byte("ycleped"))))))))))
+// 	fmt.Printf("%v\n", string(five_b(five_a(four(three(two(one_c(one_b(one_a([]byte("ycleped")))))))))))
 // }
 
 func TestConsonant(t *testing.T) {
@@ -36,7 +36,7 @@ func TestConsonant(t *testing.T) {
 	compare(t, true, Consonant(word, 4), "G")  //G
 	compare(t, false, Consonant(word, 5), "Y") //Y
 	word = []byte("yoke")
-	compare(t, false, Consonant(word, 0), "YOKE")
+	compare(t, true, Consonant(word, 0), "YOKE")
 }
 
 func TestMeasure(t *testing.T) {
