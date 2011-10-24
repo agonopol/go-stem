@@ -1,9 +1,9 @@
 package stemmer
 
 import "testing"
-import "bufio"
-import "strings"
-import "os"
+// import "bufio"
+// import "strings"
+// import "os"
 import "fmt"
 
 func compare(t *testing.T, expected, actual interface{}, msg ...string) {
@@ -11,17 +11,17 @@ func compare(t *testing.T, expected, actual interface{}, msg ...string) {
 		t.Errorf("[%v] -- value differs. Expected [%v], actual [%v]", msg, expected, actual)
 	}
 }
-// 
-// func TestWord(t *testing.T) {
-// 	fmt.Printf("%v\n", string(one_a([]byte("ycleped"))))
-// 	fmt.Printf("%v\n", string(one_b(one_a([]byte("ycleped")))))
-// 	fmt.Printf("%v\n", string(one_c(one_b(one_a([]byte("ycleped"))))))
-// 	fmt.Printf("%v\n", string(two(one_c(one_b(one_a([]byte("ycleped")))))))
-// 	fmt.Printf("%v\n", string(three(two(one_c(one_b(one_a([]byte("ycleped"))))))))
-// 	fmt.Printf("%v\n", string(four(three(two(one_c(one_b(one_a([]byte("ycleped")))))))))
-// 	fmt.Printf("%v\n", string(five_a(four(three(two(one_c(one_b(one_a([]byte("ycleped"))))))))))
-// 	fmt.Printf("%v\n", string(five_b(five_a(four(three(two(one_c(one_b(one_a([]byte("ycleped")))))))))))
-// }
+
+func TestWord(t *testing.T) {
+	fmt.Printf("%v\n", string(one_a([]byte("terribly"))))
+	fmt.Printf("%v\n", string(one_b(one_a([]byte("terribly")))))
+	fmt.Printf("%v\n", string(one_c(one_b(one_a([]byte("terribly"))))))
+	fmt.Printf("%v\n", string(two(one_c(one_b(one_a([]byte("terribly")))))))
+	fmt.Printf("%v\n", string(three(two(one_c(one_b(one_a([]byte("terribly"))))))))
+	fmt.Printf("%v\n", string(four(three(two(one_c(one_b(one_a([]byte("terribly")))))))))
+	fmt.Printf("%v\n", string(five_a(four(three(two(one_c(one_b(one_a([]byte("terribly"))))))))))
+	fmt.Printf("%v\n", string(five_b(five_a(four(three(two(one_c(one_b(one_a([]byte("terribly")))))))))))
+}
 
 func TestConsonant(t *testing.T) {
 	word := []byte("TOY")
@@ -40,19 +40,19 @@ func TestConsonant(t *testing.T) {
 }
 
 func TestMeasure(t *testing.T) {
-	compare(t, 0, Meansure([]byte("TR")))
-	compare(t, 0, Meansure([]byte("EE")))
-	compare(t, 0, Meansure([]byte("TREE")))
-	compare(t, 0, Meansure([]byte("Y")))
-	compare(t, 0, Meansure([]byte("BY")))
-	compare(t, 1, Meansure([]byte("TROUBLE")))
-	compare(t, 1, Meansure([]byte("OATS")))
-	compare(t, 1, Meansure([]byte("TREES")))
-	compare(t, 1, Meansure([]byte("IVY")))
-	compare(t, 2, Meansure([]byte("TROUBLES")))
-	compare(t, 2, Meansure([]byte("PRIVATE")))
-	compare(t, 2, Meansure([]byte("OATEN")))
-	compare(t, 2, Meansure([]byte("ORRERY")))
+	compare(t, 0, Measure([]byte("TR")))
+	compare(t, 0, Measure([]byte("EE")))
+	compare(t, 0, Measure([]byte("TREE")))
+	compare(t, 0, Measure([]byte("Y")))
+	compare(t, 0, Measure([]byte("BY")))
+	compare(t, 1, Measure([]byte("TROUBLE")))
+	compare(t, 1, Measure([]byte("OATS")))
+	compare(t, 1, Measure([]byte("TREES")))
+	compare(t, 1, Measure([]byte("IVY")))
+	compare(t, 2, Measure([]byte("TROUBLES")))
+	compare(t, 2, Measure([]byte("PRIVATE")))
+	compare(t, 2, Measure([]byte("OATEN")))
+	compare(t, 2, Measure([]byte("ORRERY")))
 }
 
 func Test1A(t *testing.T) {
@@ -154,22 +154,22 @@ func Test5B(t *testing.T) {
 }
 
 func TestVocal(t *testing.T) {
-	f, err := os.Open("in.txt")
-	if err != nil {
-		panic(err)
-	}
-	in := bufio.NewReader(f)
-	f, err = os.Open("out.txt")
-	if err != nil {
-		panic(err)
-	}
-	out := bufio.NewReader(f)
-	for word, err := in.ReadSlice('\n'); err == nil; word, err = in.ReadSlice('\n') {
-		stem, err := out.ReadSlice('\n')
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("Stemming [%v]\n", strings.TrimSpace(string(word)))
-		compare(t, strings.TrimSpace(string(stem)), string(Stem(word)), string(word))
-	}
+	// f, err := os.Open("in.txt")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// in := bufio.NewReader(f)
+	// f, err = os.Open("out.txt")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// out := bufio.NewReader(f)
+	// for word, err := in.ReadSlice('\n'); err == nil; word, err = in.ReadSlice('\n') {
+	// 	stem, err := out.ReadSlice('\n')
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	// 	fmt.Printf("Stemming [%v]\n", strings.TrimSpace(string(word)))
+	// 	compare(t, strings.TrimSpace(string(stem)), string(Stem(word)), string(word))
+	// }
 }
