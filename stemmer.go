@@ -28,24 +28,26 @@ const (
 
 func Meansure(body []byte) int {
 	meansure := 0
-	var state int
-	if Vowel(body, 0) {
-		state = vowel_state
-	} else {
-		state = consonant_state
-	}
-	for i := 0; i < len(body); i++ {
-		if Vowel(body, i) && state == consonant_state {
+	if len(body) > 0 {
+		var state int
+		if Vowel(body, 0) {
 			state = vowel_state
-		} else if Consonant(body, i) && state == vowel_state {
+		} else {
 			state = consonant_state
-			meansure++
+		}
+		for i := 0; i < len(body); i++ {
+			if Vowel(body, i) && state == consonant_state {
+				state = vowel_state
+			} else if Consonant(body, i) && state == vowel_state {
+				state = consonant_state
+				meansure++
+			}
 		}
 	}
 	return meansure
 }
 
-func HasVowel(body []byte) bool {
+func hasVowel(body []byte) bool {
 	for i := 0; i < len(body); i++ {
 		if Vowel(body, i) {
 			return true
@@ -67,7 +69,7 @@ func one_a(body []byte) []byte {
 
 func star_o(body []byte) bool {
 	size := len(body) - 1
-	if Consonant(body, size-2) && Vowel(body, size-1) && Consonant(body, size) {
+	if size >= 2 && Consonant(body, size-2) && Vowel(body, size-1) && Consonant(body, size) {
 		return body[size] != 'w' && body[size] != 'x' && body[size] != 'y'
 	}
 	return false
@@ -92,20 +94,23 @@ func one_b_a(body []byte) []byte {
 
 func one_b(body []byte) []byte {
 	if bytes.HasSuffix(body, []byte("eed")) {
-		if Meansure(body[:len(body)-1]) > 0 {
+		if Meansure(body[:len(body)-3]) > 0 {
 			return body[:len(body)-1]
 		}
-		return body
-	} else if bytes.HasSuffix(body, []byte("ed")) && HasVowel(body[:len(body)-2]) {
-		return one_b_a(body[:len(body)-2])
-	} else if bytes.HasSuffix(body, []byte("ing")) && HasVowel(body[:len(body)-3]) {
-		return one_b_a(body[:len(body)-3])
+	} else if bytes.HasSuffix(body, []byte("ed")) {
+		if hasVowel(body[:len(body)-2]) {
+			return one_b_a(body[:len(body)-2])
+		}
+	} else if bytes.HasSuffix(body, []byte("ing")) {
+		if hasVowel(body[:len(body)-3]) {
+			return one_b_a(body[:len(body)-3])
+		}
 	}
 	return body
 }
 
 func one_c(body []byte) []byte {
-	if bytes.HasSuffix(body, []byte("y")) && HasVowel(body[:len(body)-1]) {
+	if bytes.HasSuffix(body, []byte("y")) && hasVowel(body[:len(body)-1]) {
 		body[len(body)-1] = 'i'
 		return body
 	}
@@ -116,11 +121,9 @@ func two(body []byte) []byte {
 	if bytes.HasSuffix(body, []byte("ational")) && Meansure(body[:len(body)-7]) > 0 {
 		return append(body[:len(body)-7], []byte("ate")...)
 	} else if bytes.HasSuffix(body, []byte("tional")) && Meansure(body[:len(body)-6]) > 0 {
-		return append(body[:len(body)-6], []byte("tion")...)
-	} else if bytes.HasSuffix(body, []byte("enci")) && Meansure(body[:len(body)-4]) > 0 {
-		return append(body[:len(body)-4], []byte("ence")...)
-	} else if bytes.HasSuffix(body, []byte("anci")) && Meansure(body[:len(body)-4]) > 0 {
-		return append(body[:len(body)-4], []byte("ance")...)
+		return body[:len(body)-2]
+	} else if (bytes.HasSuffix(body, []byte("enci")) || bytes.HasSuffix(body, []byte("anci"))) && Meansure(body[:len(body)-4]) > 0 {
+		return append(body[:len(body)-1], 'e')
 	} else if bytes.HasSuffix(body, []byte("izer")) && Meansure(body[:len(body)-4]) > 0 {
 		return append(body[:len(body)-4], []byte("ize")...)
 	} else if bytes.HasSuffix(body, []byte("abli")) && Meansure(body[:len(body)-4]) > 0 {
@@ -159,15 +162,15 @@ func two(body []byte) []byte {
 
 func three(body []byte) []byte {
 	if bytes.HasSuffix(body, []byte("icate")) && Meansure(body[:len(body)-5]) > 0 {
-		return append(body[:len(body)-5], []byte("ic")...)
+		return body[:len(body)-3]
 	} else if bytes.HasSuffix(body, []byte("ative")) && Meansure(body[:len(body)-5]) > 0 {
 		return body[:len(body)-5]
 	} else if bytes.HasSuffix(body, []byte("alize")) && Meansure(body[:len(body)-5]) > 0 {
-		return append(body[:len(body)-5], []byte("al")...)
+		return body[:len(body)-3]
 	} else if bytes.HasSuffix(body, []byte("iciti")) && Meansure(body[:len(body)-5]) > 0 {
-		return append(body[:len(body)-5], []byte("ic")...)
+		return body[:len(body)-3]
 	} else if bytes.HasSuffix(body, []byte("ical")) && Meansure(body[:len(body)-4]) > 0 {
-		return append(body[:len(body)-4], []byte("ic")...)
+		return body[:len(body)-2]
 	} else if bytes.HasSuffix(body, []byte("ful")) && Meansure(body[:len(body)-3]) > 0 {
 		return body[:len(body)-3]
 	} else if bytes.HasSuffix(body, []byte("ness")) && Meansure(body[:len(body)-4]) > 0 {
@@ -224,7 +227,7 @@ func four(body []byte) []byte {
 func five_a(body []byte) []byte {
 	if bytes.HasSuffix(body, []byte("e")) && Meansure(body[:len(body)-1]) > 1 {
 		return body[:len(body)-1]
-	} else if bytes.HasSuffix(body, []byte("e"))  && Meansure(body[:len(body)-1]) == 1 && !star_o(body[:len(body)-1]) {
+	} else if bytes.HasSuffix(body, []byte("e")) && Meansure(body[:len(body)-1]) == 1 && !star_o(body[:len(body)-1]) {
 		return body[:len(body)-1]
 	}
 	return body

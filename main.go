@@ -9,7 +9,7 @@ func main() {
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	
-	for word, err := in.ReadSlice(' '); err == nil; word, err = in.ReadSlice(' ') {
+	for word, err := in.ReadSlice('\n'); err == nil; word, err = in.ReadSlice('\n') {
 		out.Write(stemmer.Stem(word))
 		out.WriteString("\n")
 	}
