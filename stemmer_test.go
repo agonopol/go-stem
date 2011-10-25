@@ -158,7 +158,6 @@ func TestVocal(t *testing.T) {
 		if err != nil {
 			panic(err)
 		}
-		// fmt.Printf("Stemming [%v]\n", strings.TrimSpace(string(word)))
 		compare(t, strings.TrimSpace(string(stem)), string(Stem(word)), string(word))
 	}
 }
