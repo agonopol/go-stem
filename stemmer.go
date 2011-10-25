@@ -142,6 +142,10 @@ func two(body []byte) []byte {
 		if Measure(body[:len(body)-4]) > 0 {
 			return append(body[:len(body)-4], []byte("able")...)
 		}
+	} else if bytes.HasSuffix(body, []byte("bli")) {
+		if Measure(body[:len(body)-3]) > 0 {
+			return append(body[:len(body)-3], []byte("ble")...)
+		}
 	} else if bytes.HasSuffix(body, []byte("alli")) {
 		if Measure(body[:len(body)-4]) > 0 {
 			return append(body[:len(body)-4], []byte("al")...)
@@ -197,6 +201,10 @@ func two(body []byte) []byte {
 	} else if bytes.HasSuffix(body, []byte("biliti")) {
 		if Measure(body[:len(body)-6]) > 0 {
 			return append(body[:len(body)-6], []byte("ble")...)
+		}
+	} else if bytes.HasSuffix(body, []byte("logi")) {
+		if Measure(body[:len(body)-4]) > 0 {
+			return body[:len(body)-1]
 		}
 	}
 	return body

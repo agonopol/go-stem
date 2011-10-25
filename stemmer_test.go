@@ -1,10 +1,9 @@
 package stemmer
 
 import "testing"
-// import "bufio"
-// import "strings"
-// import "os"
-import "fmt"
+import "bufio"
+import "strings"
+import "os"
 
 func compare(t *testing.T, expected, actual interface{}, msg ...string) {
 	if expected != actual {
@@ -12,16 +11,6 @@ func compare(t *testing.T, expected, actual interface{}, msg ...string) {
 	}
 }
 
-func TestWord(t *testing.T) {
-	fmt.Printf("%v\n", string(one_a([]byte("terribly"))))
-	fmt.Printf("%v\n", string(one_b(one_a([]byte("terribly")))))
-	fmt.Printf("%v\n", string(one_c(one_b(one_a([]byte("terribly"))))))
-	fmt.Printf("%v\n", string(two(one_c(one_b(one_a([]byte("terribly")))))))
-	fmt.Printf("%v\n", string(three(two(one_c(one_b(one_a([]byte("terribly"))))))))
-	fmt.Printf("%v\n", string(four(three(two(one_c(one_b(one_a([]byte("terribly")))))))))
-	fmt.Printf("%v\n", string(five_a(four(three(two(one_c(one_b(one_a([]byte("terribly"))))))))))
-	fmt.Printf("%v\n", string(five_b(five_a(four(three(two(one_c(one_b(one_a([]byte("terribly")))))))))))
-}
 
 func TestConsonant(t *testing.T) {
 	word := []byte("TOY")
@@ -154,22 +143,22 @@ func Test5B(t *testing.T) {
 }
 
 func TestVocal(t *testing.T) {
-	// f, err := os.Open("in.txt")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// in := bufio.NewReader(f)
-	// f, err = os.Open("out.txt")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// out := bufio.NewReader(f)
-	// for word, err := in.ReadSlice('\n'); err == nil; word, err = in.ReadSlice('\n') {
-	// 	stem, err := out.ReadSlice('\n')
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// 	fmt.Printf("Stemming [%v]\n", strings.TrimSpace(string(word)))
-	// 	compare(t, strings.TrimSpace(string(stem)), string(Stem(word)), string(word))
-	// }
+	f, err := os.Open("in.txt")
+	if err != nil {
+		panic(err)
+	}
+	in := bufio.NewReader(f)
+	f, err = os.Open("out.txt")
+	if err != nil {
+		panic(err)
+	}
+	out := bufio.NewReader(f)
+	for word, err := in.ReadSlice('\n'); err == nil; word, err = in.ReadSlice('\n') {
+		stem, err := out.ReadSlice('\n')
+		if err != nil {
+			panic(err)
+		}
+		// fmt.Printf("Stemming [%v]\n", strings.TrimSpace(string(word)))
+		compare(t, strings.TrimSpace(string(stem)), string(Stem(word)), string(word))
+	}
 }
