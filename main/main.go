@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/zaphar/go-stem/stemmer"
+	"github.com/agonopol/go-stem"
 	"bufio"
 	"os"
 )
